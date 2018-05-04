@@ -23,13 +23,14 @@ import org.hibernate.testing.junit4.BaseCoreFunctionalTestCase;
 import org.junit.Test;
 
 /**
- * This template demonstrates how to develop a test case for Hibernate ORM, using its built-in unit test framework.
- * Although ORMStandaloneTestCase is perfectly acceptable as a reproducer, usage of this class is much preferred.
- * Since we nearly always include a regression test with bug fixes, providing your reproducer using this method
- * simplifies the process.
+ * This template demonstrates how to develop a test case for Hibernate ORM,
+ * using its built-in unit test framework. Although ORMStandaloneTestCase is
+ * perfectly acceptable as a reproducer, usage of this class is much preferred.
+ * Since we nearly always include a regression test with bug fixes, providing
+ * your reproducer using this method simplifies the process.
  *
- * What's even better?  Fork hibernate-orm itself, add your test case directly to a module's unit tests, then
- * submit it as a PR!
+ * What's even better? Fork hibernate-orm itself, add your test case directly to
+ * a module's unit tests, then submit it as a PR!
  */
 public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 
@@ -37,39 +38,42 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 	@Override
 	protected Class[] getAnnotatedClasses() {
 		return new Class[] {
-//				Foo.class,
-//				Bar.class
+				// Foo.class,
+				// Bar.class
 		};
 	}
 
 	// If you use *.hbm.xml mappings, instead of annotations, add the mappings here.
 	@Override
 	protected String[] getMappings() {
-		return new String[] {
-//				"Foo.hbm.xml",
-//				"Bar.hbm.xml"
+		return new String[] { "myMapping.hbm",
+				// "Bar.hbm.xml"
 		};
 	}
-	// If those mappings reside somewhere other than resources/org/hibernate/test, change this.
+
+	// If those mappings reside somewhere other than resources/org/hibernate/test,
+	// change this.
 	@Override
 	protected String getBaseForMappings() {
 		return "org/hibernate/test/";
 	}
 
-	// Add in any settings that are specific to your test.  See resources/hibernate.properties for the defaults.
+	// Add in any settings that are specific to your test. See
+	// resources/hibernate.properties for the defaults.
 	@Override
 	protected void configure(Configuration configuration) {
-		super.configure( configuration );
+		super.configure(configuration);
 
-		configuration.setProperty( AvailableSettings.SHOW_SQL, Boolean.TRUE.toString() );
-		configuration.setProperty( AvailableSettings.FORMAT_SQL, Boolean.TRUE.toString() );
-		//configuration.setProperty( AvailableSettings.GENERATE_STATISTICS, "true" );
+		configuration.setProperty(AvailableSettings.SHOW_SQL, Boolean.TRUE.toString());
+		configuration.setProperty(AvailableSettings.FORMAT_SQL, Boolean.TRUE.toString());
+		// configuration.setProperty( AvailableSettings.GENERATE_STATISTICS, "true" );
 	}
 
 	// Add your tests, using standard JUnit.
 	@Test
 	public void hhh123Test() throws Exception {
-		// BaseCoreFunctionalTestCase automatically creates the SessionFactory and provides the Session.
+		// BaseCoreFunctionalTestCase automatically creates the SessionFactory and
+		// provides the Session.
 		Session s = openSession();
 		Transaction tx = s.beginTransaction();
 		// Do stuff...
