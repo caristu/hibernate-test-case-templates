@@ -58,11 +58,11 @@ public class BatchFetchStyleTestCase extends BaseCoreFunctionalTestCase {
 
 	private void testDifferentStyles(int fetchSize) {
 		long heapLegacy = buildSessionFactoryAndGetHeap(BatchFetchStyle.LEGACY, fetchSize);
-		long heapDynamic = buildSessionFactoryAndGetHeap(BatchFetchStyle.DYNAMIC, 50);
+		long heapDynamic = buildSessionFactoryAndGetHeap(BatchFetchStyle.DYNAMIC, fetchSize);
 		assertTrue(
-				"fectch size:" + fetchSize + " - legacy style heap (" + heapLegacy
+				"fetch size:" + fetchSize + " - legacy style heap (" + heapLegacy
 						+ " MB) shouldn't be more than twice bigger than dyamic size (" + heapDynamic + " MB)",
-				heapDynamic * 2 >= heapLegacy);
+				heapLegacy / 2 <= heapDynamic);
 	}
 
 	private long buildSessionFactoryAndGetHeap(BatchFetchStyle fetchStyle, int fetchSize) {
