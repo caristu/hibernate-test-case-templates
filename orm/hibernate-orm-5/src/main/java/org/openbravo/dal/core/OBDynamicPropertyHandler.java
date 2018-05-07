@@ -78,7 +78,7 @@ public class OBDynamicPropertyHandler implements PropertyAccessStrategy {
 					return theClass.getDeclaredMethod(methodName);
 				} catch (NoSuchMethodException | SecurityException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					// e1.printStackTrace();
 				}
 			}
 			return null;
