@@ -51,7 +51,7 @@ public class BatchFetchStyleTestCase extends BaseCoreFunctionalTestCase {
 	public void batchFetchStyleHeapSizeTest() throws Exception {
 		long heapLegacy = buildSessionFactoryAndGetHeap(BatchFetchStyle.LEGACY);
 		long heapDynamic = buildSessionFactoryAndGetHeap(BatchFetchStyle.DYNAMIC);
-		assertTrue("legacy style heap (" + heapLegacy + ") MB shouldn't be more than twice bigger than dyamic size ("
+		assertTrue("legacy style heap (" + heapLegacy + " MB) shouldn't be more than twice bigger than dyamic size ("
 				+ heapDynamic + " MB)", heapDynamic * 2 >= heapLegacy);
 	}
 
@@ -59,14 +59,15 @@ public class BatchFetchStyleTestCase extends BaseCoreFunctionalTestCase {
 		System.out.println("Building session factory with fetch style " + fetchStyle);
 		long t = System.currentTimeMillis();
 		Configuration config = constructConfiguration();
-		config.setProperty(AvailableSettings.DEFAULT_BATCH_FETCH_SIZE, "50");
+		config.setProperty(AvailableSettings.DEFAULT_BATCH_FETCH_SIZE, "10");
 		config.setProperty(AvailableSettings.BATCH_FETCH_STYLE, fetchStyle.toString());
 		BootstrapServiceRegistry bootRegistry = buildBootstrapServiceRegistry();
 		StandardServiceRegistryImpl serviceRegistry = buildServiceRegistry(bootRegistry, config);
 		addMappings(config);
 		applyCacheSettings(config);
 		afterConfigurationBuilt(config);
-		SessionFactoryImplementor sessionFactory = (SessionFactoryImplementor) config.buildSessionFactory(serviceRegistry);
+		SessionFactoryImplementor sessionFactory = (SessionFactoryImplementor) config
+				.buildSessionFactory(serviceRegistry);
 
 		System.gc();
 		long usedHeap = (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / (1024 * 1024);
