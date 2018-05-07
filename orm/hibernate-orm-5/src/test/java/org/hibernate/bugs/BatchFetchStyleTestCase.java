@@ -46,20 +46,30 @@ public class BatchFetchStyleTestCase extends BaseCoreFunctionalTestCase {
 		// Do nothing, let's control it ourselves
 	}
 
-	// Add your tests, using standard JUnit.
 	@Test
-	public void batchFetchStyleHeapSizeTest() throws Exception {
-		long heapLegacy = buildSessionFactoryAndGetHeap(BatchFetchStyle.LEGACY);
-		long heapDynamic = buildSessionFactoryAndGetHeap(BatchFetchStyle.DYNAMIC);
-		assertTrue("legacy style heap (" + heapLegacy + " MB) shouldn't be more than twice bigger than dyamic size ("
-				+ heapDynamic + " MB)", heapDynamic * 2 >= heapLegacy);
+	public void batchFetchStyleHeapSizeSize10Test() throws Exception {
+		testDifferentStyles(10);
 	}
 
-	private long buildSessionFactoryAndGetHeap(BatchFetchStyle fetchStyle) {
-		System.out.println("Building session factory with fetch style " + fetchStyle);
+	@Test
+	public void batchFetchStyleHeapSizeSize50Test() throws Exception {
+		testDifferentStyles(50);
+	}
+
+	private void testDifferentStyles(int fetchSize) {
+		long heapLegacy = buildSessionFactoryAndGetHeap(BatchFetchStyle.LEGACY, fetchSize);
+		long heapDynamic = buildSessionFactoryAndGetHeap(BatchFetchStyle.DYNAMIC, 50);
+		assertTrue(
+				"fectch size:" + fetchSize + " - legacy style heap (" + heapLegacy
+						+ " MB) shouldn't be more than twice bigger than dyamic size (" + heapDynamic + " MB)",
+				heapDynamic * 2 >= heapLegacy);
+	}
+
+	private long buildSessionFactoryAndGetHeap(BatchFetchStyle fetchStyle, int fetchSize) {
+		System.out.println("Building session factory with fetch style " + fetchStyle + " size: " + fetchSize);
 		long t = System.currentTimeMillis();
 		Configuration config = constructConfiguration();
-		config.setProperty(AvailableSettings.DEFAULT_BATCH_FETCH_SIZE, "10");
+		config.setProperty(AvailableSettings.DEFAULT_BATCH_FETCH_SIZE, Integer.toString(fetchSize));
 		config.setProperty(AvailableSettings.BATCH_FETCH_STYLE, fetchStyle.toString());
 		BootstrapServiceRegistry bootRegistry = buildBootstrapServiceRegistry();
 		StandardServiceRegistryImpl serviceRegistry = buildServiceRegistry(bootRegistry, config);
